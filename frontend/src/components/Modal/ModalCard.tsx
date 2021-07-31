@@ -1,8 +1,10 @@
-import { Input, Modal, Form, Button, DatePicker } from 'antd';
+import { Button, DatePicker, Form, Input, Modal } from 'antd';
 import React, { useState } from 'react';
-import { userNameRules, cardNumberRules, expirationDateRules } from './ModalRules';
+import { useCardsTable } from '../../hooks/CardTable';
+import { cardNumberRules, expirationDateRules, userNameRules } from './ModalRules';
 
 function ModalCard() {
+  const { createCard } = useCardsTable();
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
 
   function openModal() {
@@ -13,7 +15,8 @@ function ModalCard() {
     setIsOpen(false);
   }
 
-  const onFinish = (values: any) => {
+  function onFinish(values: any) {
+    createCard(values).then(() => setIsOpen(false))
     console.log('Success:', values);
   };
 
@@ -33,8 +36,8 @@ function ModalCard() {
           <label> Formulário </label>
 
           <Form.Item
-            label="Username"
-            name="username"
+            label="Name"
+            name="name"
             rules={userNameRules}
           >
             <Input maxLength={40} minLength={1} />

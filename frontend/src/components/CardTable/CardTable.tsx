@@ -1,24 +1,12 @@
 import { Table } from "antd"
 
 import 'antd/dist/antd.css';
-import { useEffect, useState } from "react";
+import { useCardsTable } from "../../hooks/CardTable";
+import { v4 as uuidv4 } from 'uuid';
 
-import api from '../../services/api';
-
-interface ICards {
-    name: string;
-    cardNumber: string;
-    expirationDate: string;
-}
 
 const CardTable = () => {
-    const [cards, setCards] = useState<ICards[]>([]);
-
-    useEffect(() => {
-        api.get("/cards").then(response => {
-            setCards(response.data);
-        })
-    }, [])
+    const { cards } = useCardsTable();
 
     const columns = [
         {
@@ -38,9 +26,12 @@ const CardTable = () => {
         }
     ];
 
-    return (
-        <Table columns={columns} dataSource={cards} />
-    )
+    return (<Table columns={columns} dataSource={cards.map(item => {
+        return {
+            ...item,
+            key: uuidv4()
+        }
+    })} />)
 }
 
 export default CardTable;
