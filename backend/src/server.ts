@@ -20,9 +20,7 @@ const Server = () => {
         app.use("/api", CardsRouter);
         app.use(
             (err: Error, request: Request, response: Response, _: NextFunction) => {
-
                 if (err instanceof ValidationsErrors) {
-
                     return response
                         .status(err.statusCode)
                         .json({ statusCode: err.statusCode, errors: err.errors });
@@ -30,7 +28,7 @@ const Server = () => {
 
                 return response
                     .status(500)
-                    .json({ status: 'error', message: 'Internal server error' });
+                    .json({ statusCode: 500, message: 'Internal server error' });
             },
         );
 
@@ -38,14 +36,13 @@ const Server = () => {
 
     const start = () => {
         app.listen(PORT, () => {
-            console.log("Tô on, pae!");
+            console.log(`Server running on port ${PORT}`);
         })
     }
 
     return {
         setup,
         start,
-        app
     }
 }
 

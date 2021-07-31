@@ -1,6 +1,6 @@
 import Server from './src/server';
 
-const { setup, start, app } = Server();
+const server = Server();
 
-setup();
-start();
+server.setup();
+server.start();

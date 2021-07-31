@@ -1,4 +1,4 @@
-import { ICards, addNewCo, getAllCards } from '../repositories/CardsRepository'
+import { ICards, addNewCard, getAllCards } from '../repositories/CardsRepository'
 
 class CardService {
     findAllCards = (): ICards[] => {
@@ -6,7 +6,7 @@ class CardService {
     }
 
     save = (card: ICards): void => {
-        addNewCo(card);
+        addNewCard(card);
     }
 }
 

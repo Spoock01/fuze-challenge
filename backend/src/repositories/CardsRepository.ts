@@ -18,6 +18,6 @@ export const getAllCards = () => {
     return cards;
 }
 
-export const addNewCo = (info: ICards): void => {
+export const addNewCard = (info: ICards): void => {
     cards.push(info);
 }
