@@ -6,11 +6,11 @@ export interface ICards {
   expirationDate: string;
 }
 
-const cards: ICards[] = Array(5).fill(0).map((): ICards => ({
+const cards: ICards[] = Array(5).fill({
   cardNumber: DataGenerator.getCardNumber(),
   name: DataGenerator.getFirstName(),
   expirationDate: DataGenerator.getExpirationDate(),
-}));
+});
 
 export const getAllCards = () => cards;
 
