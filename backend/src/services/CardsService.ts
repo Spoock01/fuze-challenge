@@ -1,13 +1,11 @@
-import { ICards, addNewCard, getAllCards } from '../repositories/CardsRepository'
+import { ICards, addNewCard, getAllCards } from '../repositories/CardsRepository';
 
 class CardService {
-    findAllCards = (): ICards[] => {
-        return getAllCards();
-    }
+  findAllCards = (): ICards[] => getAllCards()
 
-    save = (card: ICards): void => {
-        addNewCard(card);
-    }
+  save = (card: ICards): void => {
+    addNewCard(card);
+  }
 }
 
 export default CardService;
