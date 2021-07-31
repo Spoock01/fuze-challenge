@@ -1,11 +1,16 @@
-import { Button, DatePicker, Form, Input, Modal } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
 import React, { useState } from 'react';
+import Cards, { Focused, ReactCreditCardProps } from 'react-credit-cards';
+import 'react-credit-cards/es/styles-compiled.css';
 import { useCardsTable } from '../../hooks/CardTable';
-import { cardNumberRules, expirationDateRules, userNameRules } from './ModalRules';
+import { cardNumberRules, expirationDateRules, userNameRules, cvvRules } from './ModalRules';
+import MaskedInput from 'antd-mask-input'
+
 
 function ModalCard() {
   const { createCard } = useCardsTable();
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [ccInfo, setCCInfo] = useState<ReactCreditCardProps>({ cvc: '', expiry: '', name: '', number: '' } as ReactCreditCardProps);
 
   function openModal() {
     setIsOpen(true);
@@ -19,6 +24,14 @@ function ModalCard() {
     createCard(values).then(() => setIsOpen(false))
     console.log('Success:', values);
   };
+
+  function onInputChange({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) {
+    setCCInfo({ ...ccInfo, [name]: value })
+
+  }
+  function onFocusChange({ target: { name } }: React.ChangeEvent<HTMLInputElement>) {
+    setCCInfo({ ...ccInfo, focused: name as Focused })
+  }
 
   return (
     <>
@@ -34,29 +47,41 @@ function ModalCard() {
           onFinish={onFinish}
         >
           <label> Formulário </label>
+          <Cards
+            cvc={ccInfo.cvc}
+            expiry={ccInfo.expiry}
+            focused={ccInfo.focused}
+            name={ccInfo.name}
+            number={ccInfo.number}
+          />
 
           <Form.Item
-            label="Name"
-            name="name"
-            rules={userNameRules}
-          >
-            <Input maxLength={40} minLength={1} />
-          </Form.Item>
-
-          <Form.Item
-            label="Card Number"
             name="cardNumber"
             rules={cardNumberRules}
           >
-            <Input maxLength={16} />
+            <Input placeholder={"Card Number"} name={"number"} maxLength={16} onChange={onInputChange} onFocus={onFocusChange} />
           </Form.Item>
 
           <Form.Item
-            label="Expiration Date"
+            name="name"
+            rules={userNameRules}
+          >
+            <Input placeholder="Name" name={"name"} maxLength={40} minLength={10} onChange={onInputChange} onFocus={onFocusChange} />
+          </Form.Item>
+
+          <Form.Item
             name="expirationDate"
             rules={expirationDateRules}
           >
-            <DatePicker />
+            {/* <Input placeholder={"Expiration"} name={"expiry"} maxLength={4} onChange={onInputChange} /> */}
+            <MaskedInput mask="11/11" name="expiry" placeholder="mm/yy" onChange={onInputChange} onFocus={onFocusChange} />
+          </Form.Item>
+
+          <Form.Item
+            name="cvc"
+            rules={cvvRules}
+          >
+            <Input placeholder="cvc" name={"cvc"} maxLength={3} minLength={3} onChange={onInputChange} onFocus={onFocusChange} />
           </Form.Item>
 
           <Form.Item

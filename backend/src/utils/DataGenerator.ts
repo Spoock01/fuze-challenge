@@ -5,5 +5,7 @@ export default class DataGenerator {
 
   static getCardNumber = (): string => `147125823693147${Math.floor(Math.random() * 10)}`
 
-  static getExpirationDate = (): string => `2021-07-0${Math.floor(Math.random() * 10)}`
+  static getExpirationDate = (): string => `07/3${Math.floor(Math.random() * 10)}`
+
+  static getExpirationCVC = (): string => `${Math.floor(Math.random() * (999 - 100 + 1) + 100)}`
 }

@@ -3,7 +3,6 @@ import { Table } from "antd"
 import 'antd/dist/antd.css';
 import { ICards, useCardsTable } from "../../hooks/CardTable";
 import { v4 as uuidv4 } from 'uuid';
-import { ProColumns, ActionType } from '@ant-design/pro-table';
 
 
 const CardTable = () => {
@@ -26,6 +25,11 @@ const CardTable = () => {
             dataIndex: "expirationDate",
             key: "expirationDate",
             sorter: (a: ICards, b: ICards) => a.expirationDate.localeCompare(b.expirationDate)
+        },
+        {
+            title: "CVC",
+            dataIndex: "cvc",
+            key: "cvc"
         }
     ];
 

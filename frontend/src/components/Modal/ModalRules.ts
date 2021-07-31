@@ -31,9 +31,25 @@ export const cardNumberRules: Rule[] = [
     pattern: /^[0-9]*$/
   }
 ]
+
 export const expirationDateRules: Rule[] = [
   {
     required: true,
     message: 'Please add expiration date.',
   },
+  {
+    message: "Invalid expiration date",
+    pattern: /^(1[0-2]|0[1-9]|\d)\/\d\d$/ // TODO melhorar regex
+  }
+]
+
+export const cvvRules: Rule[] = [
+  {
+    required: true,
+    message: 'Please add cvv.',
+  },
+  {
+    message: "Invalid cvv",
+    pattern: /^[0-9]{3}$/ // TODO melhorar regex
+  }
 ]

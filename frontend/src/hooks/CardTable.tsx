@@ -5,6 +5,7 @@ export interface ICards {
   name: string;
   cardNumber: string;
   expirationDate: string;
+  cvc: string;
 }
 
 interface CardTableProviderProps {

@@ -19,4 +19,10 @@ export class CardValidator {
   @Trim()
   @IsNotEmpty()
   public expirationDate: string;
+
+  @IsString()
+  @Trim()
+  @IsNotEmpty()
+  @Length(3, 3)
+  public cvc: string;
 }

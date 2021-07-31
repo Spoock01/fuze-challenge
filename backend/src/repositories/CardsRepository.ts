@@ -10,6 +10,7 @@ const cards: ICards[] = Array(5).fill(0).map(() => ({
   cardNumber: DataGenerator.getCardNumber(),
   name: DataGenerator.getFirstName(),
   expirationDate: DataGenerator.getExpirationDate(),
+  cvc: DataGenerator.getExpirationCVC(),
 }));
 
 export const getAllCards = () => cards;
