@@ -1,6 +1,14 @@
-function App() {
+import React from "react";
+import CardTable from "../components/CardTable/CardTable";
+import Header from "../components/Header/Header";
+
+
+const App = () => {
   return (
-    <h1>Edson DEV</h1>
+    <>
+      <Header />
+      <CardTable />
+    </>
   );
 }
 
