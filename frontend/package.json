@@ -53,7 +53,8 @@
   "devDependencies": {
     "@types/react-credit-cards": "^0.8.1",
     "@types/react-modal": "^3.12.1",
-    "@types/styled-components": "^5.1.11"
+    "@types/styled-components": "^5.1.11",
+    "eslint-config-react": "^1.1.7"
   },
   "resolutions": {
     "styled-components": "^5"
