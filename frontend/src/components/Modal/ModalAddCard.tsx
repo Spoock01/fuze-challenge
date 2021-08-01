@@ -15,12 +15,13 @@ interface ModalCardProps {
 
 function ModalCard({ modalIsOpen, closeModal }: ModalCardProps) {
   const { createCard } = useCardsTable();
+  const [form] = Form.useForm();
   const [btnState, setBtnState] = useState(false);
   const [ccInfo, setCCInfo] = useState<ReactCreditCardProps>({ cvc: '', expiry: '', name: '', number: '' } as ReactCreditCardProps);
 
   function onFinish(values: any) {
     setBtnState(true);
-    createCard(values).then(closeModal).catch(() => setBtnState(false))
+    createCard(values).then(() => { closeModal(); setBtnState(false); form.resetFields(); }).catch(() => setBtnState(false))
   };
 
   function onInputChange({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) {
@@ -32,63 +33,62 @@ function ModalCard({ modalIsOpen, closeModal }: ModalCardProps) {
   }
 
   return (
-    <>
-      <Modal
-        visible={modalIsOpen}
-        onCancel={closeModal}
-        onOk={onFinish}
-        footer={null}
+    <Modal
+      visible={modalIsOpen}
+      onCancel={closeModal}
+      onOk={onFinish}
+      footer={null}
+    >
+      <Form
+        name="basic"
+        onFinish={onFinish}
+        form={form}
       >
-        <Form
-          name="basic"
-          onFinish={onFinish}
+        <CardContainer>
+          <Cards
+            cvc={ccInfo.cvc}
+            expiry={ccInfo.expiry}
+            focused={ccInfo.focused}
+            name={ccInfo.name}
+            number={ccInfo.number}
+          />
+        </CardContainer>
+
+        <Form.Item
+          name="cardNumber"
+          rules={cardNumberRules}
         >
-          <CardContainer>
-            <Cards
-              cvc={ccInfo.cvc}
-              expiry={ccInfo.expiry}
-              focused={ccInfo.focused}
-              name={ccInfo.name}
-              number={ccInfo.number}
-            />
-          </CardContainer>
+          <InputContainer placeholder={"Card Number"} name={"number"} maxLength={16} onChange={onInputChange} onFocus={onFocusChange} />
+        </Form.Item>
 
-          <Form.Item
-            name="cardNumber"
-            rules={cardNumberRules}
-          >
-            <InputContainer placeholder={"Card Number"} name={"number"} maxLength={16} onChange={onInputChange} onFocus={onFocusChange} />
-          </Form.Item>
+        <Form.Item
+          name="name"
+          rules={userNameRules}
+        >
+          <InputContainer placeholder="Name" name={"name"} maxLength={40} minLength={10} onChange={onInputChange} onFocus={onFocusChange} />
+        </Form.Item>
 
-          <Form.Item
-            name="name"
-            rules={userNameRules}
-          >
-            <InputContainer placeholder="Name" name={"name"} maxLength={40} minLength={10} onChange={onInputChange} onFocus={onFocusChange} />
-          </Form.Item>
+        <Form.Item
+          name="expirationDate"
+          rules={expirationDateRules}
+        >
+          <MaskedInput mask="11/11" name="expiry" placeholder="MM/YY" onChange={onInputChange} onFocus={onFocusChange} />
+        </Form.Item>
 
-          <Form.Item
-            name="expirationDate"
-            rules={expirationDateRules}
-          >
-            <MaskedInput mask="11/11" name="expiry" placeholder="MM/YY" onChange={onInputChange} onFocus={onFocusChange} />
-          </Form.Item>
+        <Form.Item
+          name="cvc"
+          rules={cvvRules}
+        >
+          <InputContainer placeholder="CVV" name={"cvc"} maxLength={3} minLength={3} onChange={onInputChange} onFocus={onFocusChange} />
+        </Form.Item>
 
-          <Form.Item
-            name="cvc"
-            rules={cvvRules}
-          >
-            <InputContainer placeholder="CVV" name={"cvc"} maxLength={3} minLength={3} onChange={onInputChange} onFocus={onFocusChange} />
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" loading={btnState} >
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
-    </>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={btnState} >
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </Modal>
   );
 }
 
