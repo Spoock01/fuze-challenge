@@ -4,8 +4,8 @@ export const Container = styled.header`
   height: 75px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 15px 80px;
+  align-items: baseline;
+  padding: 15px 140px;
   background-color: var(--purple);
 
   h1 {

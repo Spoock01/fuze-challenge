@@ -1,11 +1,11 @@
-import { Button, Form, Input, Modal } from 'antd';
+import { Button, Form, Modal } from 'antd';
+import MaskedInput from 'antd-mask-input';
 import React, { useState } from 'react';
 import Cards, { Focused, ReactCreditCardProps } from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import { useCardsTable } from '../../hooks/CardTable';
-import { cardNumberRules, expirationDateRules, userNameRules, cvvRules } from './ModalRules';
-import MaskedInput from 'antd-mask-input';
-import { InputContainer } from './styles';
+import { cardNumberRules, cvvRules, expirationDateRules, userNameRules } from './ModalRules';
+import { InputContainer, CardContainer } from './styles';
 
 interface ModalCardProps {
   modalIsOpen: boolean;
@@ -37,20 +37,22 @@ function ModalCard({ modalIsOpen, closeModal }: ModalCardProps) {
         onCancel={closeModal}
         onOk={onFinish}
         footer={null}
-        className="modal"
       >
         <Form
           name="basic"
           onFinish={onFinish}
         >
           <label>Add Card</label>
-          <Cards
-            cvc={ccInfo.cvc}
-            expiry={ccInfo.expiry}
-            focused={ccInfo.focused}
-            name={ccInfo.name}
-            number={ccInfo.number}
-          />
+
+          <CardContainer>
+            <Cards
+              cvc={ccInfo.cvc}
+              expiry={ccInfo.expiry}
+              focused={ccInfo.focused}
+              name={ccInfo.name}
+              number={ccInfo.number}
+            />
+          </CardContainer>
 
           <Form.Item
             name="cardNumber"

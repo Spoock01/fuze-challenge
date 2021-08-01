@@ -6,7 +6,7 @@ export interface ICards {
   expirationDate: string;
 }
 
-const cards: ICards[] = Array(5).fill(0).map(() => ({
+const cards: ICards[] = Array(10).fill(0).map(() => ({
   cardNumber: DataGenerator.getCardNumber(),
   name: DataGenerator.getFirstName(),
   expirationDate: DataGenerator.getExpirationDate(),
