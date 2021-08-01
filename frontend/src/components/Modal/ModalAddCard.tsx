@@ -12,16 +12,21 @@ interface ModalCardProps {
   closeModal: () => void;
 }
 
+const cardInitialState: ReactCreditCardProps = { cvc: '', expiry: '', name: '', number: '' };
+
 
 function ModalCard({ modalIsOpen, closeModal }: ModalCardProps) {
   const { createCard } = useCardsTable();
   const [form] = Form.useForm();
   const [btnState, setBtnState] = useState(false);
-  const [ccInfo, setCCInfo] = useState<ReactCreditCardProps>({ cvc: '', expiry: '', name: '', number: '' } as ReactCreditCardProps);
+  const [ccInfo, setCCInfo] = useState<ReactCreditCardProps>(cardInitialState);
 
   function onFinish(values: any) {
     setBtnState(true);
-    createCard(values).then(() => { closeModal(); setBtnState(false); form.resetFields(); }).catch(() => setBtnState(false))
+    createCard(values).then(() => {
+      setBtnState(false);
+      onCancel();
+    }).catch(() => setBtnState(false))
   };
 
   function onInputChange({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) {
@@ -32,11 +37,18 @@ function ModalCard({ modalIsOpen, closeModal }: ModalCardProps) {
     setCCInfo({ ...ccInfo, focused: name as Focused })
   }
 
+  function onCancel() {
+    setCCInfo(cardInitialState);
+    form.resetFields();
+    closeModal();
+  }
+
   return (
     <Modal
       visible={modalIsOpen}
-      onCancel={closeModal}
+      onCancel={onCancel}
       onOk={onFinish}
+      afterClose={onCancel}
       footer={null}
     >
       <Form
