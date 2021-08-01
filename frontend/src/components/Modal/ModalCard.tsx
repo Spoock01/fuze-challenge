@@ -42,8 +42,6 @@ function ModalCard({ modalIsOpen, closeModal }: ModalCardProps) {
           name="basic"
           onFinish={onFinish}
         >
-          <label>Add Card</label>
-
           <CardContainer>
             <Cards
               cvc={ccInfo.cvc}
