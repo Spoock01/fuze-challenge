@@ -11,6 +11,11 @@ export const Container = styled.header`
   a {
     color: var(--main-color);
     font-size: 20px;
+
+    transition: 0.1s;
+    &:hover {
+      color: black;
+    }
   }
 `
 
