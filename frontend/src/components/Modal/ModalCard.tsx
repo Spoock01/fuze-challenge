@@ -4,25 +4,22 @@ import Cards, { Focused, ReactCreditCardProps } from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import { useCardsTable } from '../../hooks/CardTable';
 import { cardNumberRules, expirationDateRules, userNameRules, cvvRules } from './ModalRules';
-import MaskedInput from 'antd-mask-input'
+import MaskedInput from 'antd-mask-input';
+import { InputContainer } from './styles';
+
+interface ModalCardProps {
+  modalIsOpen: boolean;
+  closeModal: () => void;
+}
 
 
-function ModalCard() {
+function ModalCard({ modalIsOpen, closeModal }: ModalCardProps) {
   const { createCard } = useCardsTable();
-  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+
   const [ccInfo, setCCInfo] = useState<ReactCreditCardProps>({ cvc: '', expiry: '', name: '', number: '' } as ReactCreditCardProps);
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
   function onFinish(values: any) {
-    createCard(values).then(() => setIsOpen(false))
-    console.log('Success:', values);
+    createCard(values).then(closeModal)
   };
 
   function onInputChange({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) {
@@ -35,18 +32,18 @@ function ModalCard() {
 
   return (
     <>
-      <button onClick={openModal}>Open Modal</button>
       <Modal
         visible={modalIsOpen}
         onCancel={closeModal}
         onOk={onFinish}
         footer={null}
+        className="modal"
       >
         <Form
           name="basic"
           onFinish={onFinish}
         >
-          <label> Formulário </label>
+          <label>Add Card</label>
           <Cards
             cvc={ccInfo.cvc}
             expiry={ccInfo.expiry}
@@ -59,37 +56,31 @@ function ModalCard() {
             name="cardNumber"
             rules={cardNumberRules}
           >
-            <Input placeholder={"Card Number"} name={"number"} maxLength={16} onChange={onInputChange} onFocus={onFocusChange} />
+            <InputContainer placeholder={"Card Number"} name={"number"} maxLength={16} onChange={onInputChange} onFocus={onFocusChange} />
           </Form.Item>
 
           <Form.Item
             name="name"
             rules={userNameRules}
           >
-            <Input placeholder="Name" name={"name"} maxLength={40} minLength={10} onChange={onInputChange} onFocus={onFocusChange} />
+            <InputContainer placeholder="Name" name={"name"} maxLength={40} minLength={10} onChange={onInputChange} onFocus={onFocusChange} />
           </Form.Item>
 
           <Form.Item
             name="expirationDate"
             rules={expirationDateRules}
           >
-            {/* <Input placeholder={"Expiration"} name={"expiry"} maxLength={4} onChange={onInputChange} /> */}
-            <MaskedInput mask="11/11" name="expiry" placeholder="mm/yy" onChange={onInputChange} onFocus={onFocusChange} />
+            <MaskedInput mask="11/11" name="expiry" placeholder="MM/YY" onChange={onInputChange} onFocus={onFocusChange} />
           </Form.Item>
 
           <Form.Item
             name="cvc"
             rules={cvvRules}
           >
-            <Input placeholder="cvc" name={"cvc"} maxLength={3} minLength={3} onChange={onInputChange} onFocus={onFocusChange} />
+            <InputContainer placeholder="CVV" name={"cvc"} maxLength={3} minLength={3} onChange={onInputChange} onFocus={onFocusChange} />
           </Form.Item>
 
-          <Form.Item
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
+          <Form.Item>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>

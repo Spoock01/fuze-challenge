@@ -4,7 +4,6 @@ import 'antd/dist/antd.css';
 import { ICards, useCardsTable } from "../../hooks/CardTable";
 import { v4 as uuidv4 } from 'uuid';
 
-
 const CardTable = () => {
     const { cards } = useCardsTable();
 
@@ -33,12 +32,14 @@ const CardTable = () => {
         }
     ];
 
-    return (<Table columns={columns} dataSource={cards.map(item => {
-        return {
-            ...item,
-            key: uuidv4()
-        }
-    })} />)
+    return (
+        <Table pagination={false} columns={columns} dataSource={cards.map(item => {
+            return {
+                ...item,
+                key: uuidv4()
+            }
+        })} />
+    )
 }
 
 export default CardTable;
