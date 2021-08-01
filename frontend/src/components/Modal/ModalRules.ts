@@ -39,7 +39,7 @@ export const expirationDateRules: Rule[] = [
   },
   {
     message: "Invalid expiration date",
-    pattern: /^(1[0-2]|0[1-9]|\d)\/\d\d$/ // TODO melhorar regex
+    pattern: /^(1[0-2]|0[1-9]|\d)\/\d\d$/
   }
 ]
 
@@ -50,6 +50,6 @@ export const cvvRules: Rule[] = [
   },
   {
     message: "Invalid cvv",
-    pattern: /^[0-9]{3}$/ // TODO melhorar regex
+    pattern: /^[0-9]{3}$/
   }
 ]

@@ -15,11 +15,12 @@ interface ModalCardProps {
 
 function ModalCard({ modalIsOpen, closeModal }: ModalCardProps) {
   const { createCard } = useCardsTable();
-
+  const [btnState, setBtnState] = useState(false);
   const [ccInfo, setCCInfo] = useState<ReactCreditCardProps>({ cvc: '', expiry: '', name: '', number: '' } as ReactCreditCardProps);
 
   function onFinish(values: any) {
-    createCard(values).then(closeModal)
+    setBtnState(true);
+    createCard(values).then(closeModal).catch(() => setBtnState(false))
   };
 
   function onInputChange({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) {
@@ -81,7 +82,7 @@ function ModalCard({ modalIsOpen, closeModal }: ModalCardProps) {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={btnState} >
               Submit
             </Button>
           </Form.Item>

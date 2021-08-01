@@ -8,7 +8,7 @@ export const Container = styled.header`
   padding: 15px 140px;
   background-color: var(--purple);
 
-  h1 {
+  a {
     color: var(--main-color);
     font-size: 20px;
   }
