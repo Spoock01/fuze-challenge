@@ -26,21 +26,18 @@ const CardTableProvider = ({ children }: CardTableProviderProps) => {
   const [apiNotification, contextHolder] = notification.useNotification();
 
   useEffect(() => {
-    getCards();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  async function getCards() {
-    try {
-      const { data } = await api.get("cards");
-      setCards(data);
-    } catch (err) {
-      apiNotification.error({
-        message: err.message,
-        placement: 'topRight'
-      })
-    }
-  }
+    (async function getCards() {
+      try {
+        const { data } = await api.get("cards");
+        setCards(data);
+      } catch (err) {
+        apiNotification.error({
+          message: err.message,
+          placement: 'topRight'
+        })
+      }
+    })()
+  }, [apiNotification])
 
   async function createCard(card: ICards): Promise<void> {
     try {
