@@ -3,6 +3,7 @@ import { Table } from "antd"
 import 'antd/dist/antd.css';
 import { ICards, useCardsTable } from "../../hooks/CardTable";
 import { v4 as uuidv4 } from 'uuid';
+import { Container } from './styles'
 
 const CardTable = () => {
     const { cards } = useCardsTable();
@@ -26,19 +27,24 @@ const CardTable = () => {
             sorter: (a: ICards, b: ICards) => a.expirationDate.localeCompare(b.expirationDate)
         },
         {
-            title: "CVC",
+            title: "CVV",
             dataIndex: "cvc",
             key: "cvc"
         }
     ];
 
     return (
-        <Table pagination={false} columns={columns} dataSource={cards.map(item => {
-            return {
-                ...item,
-                key: uuidv4()
-            }
-        })} />
+        <Container>
+            <Table
+                pagination={false}
+                columns={columns}
+                dataSource={cards.map(item => {
+                    return {
+                        ...item,
+                        key: uuidv4()
+                    }
+                })} />
+        </Container>
     )
 }
 

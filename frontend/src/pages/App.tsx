@@ -1,6 +1,6 @@
 import React from "react";
-import Main from "../components/Main";
-import Header from "../components/Header/Header";
+import CardTable from "../components/CardTable";
+import Header from "../components/Header";
 import CardTableProvider from "../hooks/CardTable";
 import GlobalStyle from '../styles';
 
@@ -12,7 +12,7 @@ const App = () => {
       <CardTableProvider>
         <GlobalStyle />
         <Header />
-        <Main />
+        <CardTable />
       </CardTableProvider>
     </Context.Provider>
   );

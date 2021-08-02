@@ -27,7 +27,7 @@ export const cardNumberRules: Rule[] = [
     max: 16
   },
   {
-    message: "Only numbers are allowed",
+    message: "Only numbers are allowed.",
     pattern: /^[0-9]*$/
   }
 ]
@@ -38,7 +38,7 @@ export const expirationDateRules: Rule[] = [
     message: 'Please add expiration date.',
   },
   {
-    message: "Invalid expiration date",
+    message: "Invalid expiration date.",
     pattern: /^(1[0-2]|0[1-9]|\d)\/\d\d$/
   }
 ]
@@ -49,7 +49,7 @@ export const cvvRules: Rule[] = [
     message: 'Please add cvv.',
   },
   {
-    message: "Invalid cvv",
+    message: "Invalid cvv.",
     pattern: /^[0-9]{3}$/
   }
 ]

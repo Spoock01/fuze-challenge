@@ -6,14 +6,19 @@ import 'react-credit-cards/es/styles-compiled.css';
 import { useCardsTable } from '../../hooks/CardTable';
 import { cardNumberRules, cvvRules, expirationDateRules, userNameRules } from './ModalRules';
 import { InputContainer, CardContainer } from './styles';
+import { cardNumberMaxLength, cvvMaxLength, nameMinLength, nameMaxLength, cvvMinLength } from "./constants";
 
 interface ModalCardProps {
   modalIsOpen: boolean;
   closeModal: () => void;
 }
 
-const cardInitialState: ReactCreditCardProps = { cvc: '', expiry: '', name: '', number: '' };
-
+const cardInitialState: ReactCreditCardProps = {
+  cvc: '',
+  expiry: '',
+  name: '',
+  number: ''
+};
 
 function ModalCard({ modalIsOpen, closeModal }: ModalCardProps) {
   const { createCard } = useCardsTable();
@@ -58,11 +63,7 @@ function ModalCard({ modalIsOpen, closeModal }: ModalCardProps) {
       >
         <CardContainer>
           <Cards
-            cvc={ccInfo.cvc}
-            expiry={ccInfo.expiry}
-            focused={ccInfo.focused}
-            name={ccInfo.name}
-            number={ccInfo.number}
+            {...ccInfo}
           />
         </CardContainer>
 
@@ -70,28 +71,50 @@ function ModalCard({ modalIsOpen, closeModal }: ModalCardProps) {
           name="cardNumber"
           rules={cardNumberRules}
         >
-          <InputContainer placeholder={"Card Number"} name={"number"} maxLength={16} onChange={onInputChange} onFocus={onFocusChange} />
+          <InputContainer
+            placeholder={"Card Number"}
+            name={"number"}
+            maxLength={cardNumberMaxLength}
+            onChange={onInputChange}
+            onFocus={onFocusChange} />
         </Form.Item>
 
         <Form.Item
           name="name"
           rules={userNameRules}
         >
-          <InputContainer placeholder="Name" name={"name"} maxLength={40} minLength={10} onChange={onInputChange} onFocus={onFocusChange} />
+          <InputContainer
+            placeholder="Name"
+            name={"name"}
+            maxLength={nameMaxLength}
+            minLength={nameMinLength}
+            onChange={onInputChange}
+            onFocus={onFocusChange} />
         </Form.Item>
 
         <Form.Item
           name="expirationDate"
           rules={expirationDateRules}
         >
-          <MaskedInput mask="11/11" name="expiry" placeholder="MM/YY" onChange={onInputChange} onFocus={onFocusChange} />
+          <MaskedInput
+            mask="11/11"
+            name="expiry"
+            placeholder="MM/YY"
+            onChange={onInputChange}
+            onFocus={onFocusChange} />
         </Form.Item>
 
         <Form.Item
           name="cvc"
           rules={cvvRules}
         >
-          <InputContainer placeholder="CVV" name={"cvc"} maxLength={3} minLength={3} onChange={onInputChange} onFocus={onFocusChange} />
+          <InputContainer
+            placeholder="CVV"
+            name={"cvc"}
+            maxLength={cvvMaxLength}
+            minLength={cvvMinLength}
+            onChange={onInputChange}
+            onFocus={onFocusChange} />
         </Form.Item>
 
         <Form.Item>

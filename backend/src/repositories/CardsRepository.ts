@@ -4,6 +4,7 @@ export interface ICards {
   name: string;
   cardNumber: string;
   expirationDate: string;
+  cvc: string;
 }
 
 const cards: ICards[] = Array(10).fill(0).map(() => ({

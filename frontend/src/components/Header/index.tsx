@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ModalCard from "../Modal/ModalAddCard";
+import ModalCard from "../Modal";
 import { Container, ButtonContainer } from './styles';
 import { PlusCircleOutlined } from '@ant-design/icons'
 

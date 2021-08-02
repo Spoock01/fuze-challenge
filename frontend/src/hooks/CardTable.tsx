@@ -26,7 +26,7 @@ const CardTableProvider = ({ children }: CardTableProviderProps) => {
   const [apiNotification, contextHolder] = notification.useNotification();
 
   useEffect(() => {
-    api.get("/cards").then(response => {
+    api.get("cards").then(response => {
       setCards(response.data);
     }).catch((err) => {
       apiNotification.error({
